@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:list_app/database/app_database.dart';
-import 'package:list_app/models/contact.dart';
-import 'package:list_app/screens/contacts_form.dart';
-import 'package:list_app/screens/contacts_list.dart';
 import 'package:list_app/screens/dashboard.dart';
 
 // scaffold - obtem uma estrutura de layout basico do material design

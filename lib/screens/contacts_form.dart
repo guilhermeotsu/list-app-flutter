@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list_app/models/contact.dart';
+import 'package:list_app/database/dao/contact_dao.dart';
 
 class ContactsForm extends StatefulWidget {
 // quando se pega estado e muda ele e necessario mudar de stateless para statefull
@@ -13,6 +14,7 @@ class _ContactsFormState extends State<ContactsForm> {
   final TextEditingController _accountNumberController =
       TextEditingController();
 
+  var _dao = ContactDao();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +61,7 @@ class _ContactsFormState extends State<ContactsForm> {
                         int.tryParse(_accountNumberController.text);
 
                     final Contact newContact = Contact(0, name, accountNumber);
-                    Navigator.pop(context, newContact);
+                    _dao.save(newContact).then((id) => Navigator.pop(context));
                   },
                 ),
               ),

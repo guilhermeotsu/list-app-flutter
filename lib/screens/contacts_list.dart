@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:list_app/database/app_database.dart';
+import 'package:list_app/database/dao/contact_dao.dart';
 import 'package:list_app/models/contact.dart';
 import 'package:list_app/screens/contacts_form.dart';
 
 class ContactsList extends StatelessWidget {
+  var _dao = ContactDao();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,26 +12,22 @@ class ContactsList extends StatelessWidget {
         title: Text('Contacts'),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add_call),
+        child: Icon(Icons.add),
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
-          Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                  builder: (context) => ContactsForm(),
-                ),
-              )
-              .then(
-                (newContact) => debugPrint(newContact.toString()),
-              ); // pegando as informações de retorno (pop) apos o push;
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ContactsForm(),
+            ),
+          ); // pegando as informações de retorno (pop) apos o push;
         },
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: List(),
         // vai executar o future e após isso vai executar o codigo do builder, onde fica o callback
         // o snapshot contem todas as informações do future: findAll()
-        future:
-            findAll(), // referencia do future que queremos que seja executada
+        future: _dao
+            .findAll(), // referencia do future que queremos que seja executada
         builder: (context, snapshot) {
           // if (snapshot.data != null) {
           switch (snapshot.connectionState) {
